@@ -1,0 +1,234 @@
+.icon-size-medium {
+    font-size: 25px;
+    background: transparent;
+    border: 0px;
+}
+
+.icon-size-medium-small {
+    font-size: 20px;
+    background: transparent;
+    border: 0px;
+}
+.icon-size-me{
+    font-size: 25px;
+    background: transparent;
+    border: 0px;
+}
+.center{
+    text-align: center; 
+}
+
+.bg-green{
+    color: black !important;
+    background-color: #74ddae !important;
+}
+
+
+.modal-a-padding{
+    padding: 7px;
+}
+
+.mouse-pointer {
+    cursor: pointer;
+}
+
+.hr-smaller hr{
+    border: 1;
+    color: #c4c4c4;
+    border-top: 0.1px solid #e6e6e6 !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+}
+
+.icon-size-small {
+    font-size: 16px;
+    background: transparent;
+    border: 0px;
+}
+
+.float-table {
+    float: left;
+}
+
+.loginBut {
+    padding-top: 0%;
+    padding-right: 30%;
+    padding-left: 30%;
+}
+
+.loginReg {
+    padding-top: 0%;
+    padding-right: 20%;
+    padding-left: 20%;
+}
+
+.width-like-100 {
+    width: 100% !important
+}
+
+.button_list {
+    padding-bottom: 10px;
+}
+
+
+.pad_entry_book {
+    padding-top: 20px;
+}
+
+.modal-requisition {
+    font-size: 14px;
+}
+
+.modal-requisition span {
+    font-weight: bold;
+    float: left;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.modal-veiculos {
+    font-size: 14px;
+
+}
+
+.modal-veiculos span {
+    float: left;
+    padding-right: 10px;
+}
+
+.modal-veiculos h1 {
+    font-size: 14px;
+    font-weight: bold;
+}
+.padding_icon{
+    padding-right: 10px;
+}
+
+#but {
+    text-align: right;
+}
+
+#emailProfile {
+    float: left;
+    padding-left: 17px;
+    padding-top: 5px;
+}
+
+#buttonVerifyProfile {
+    text-align: right;
+    padding-right: 17px;
+}
+
+#buttonModal {
+    padding-left: 0px;
+    text-align: left;
+}
+#button_profile {
+    padding-top: 50px;
+}
+#label_filter{
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: left;
+    margin-top: 3px;
+}
+#myInput{
+    width: 160px; 
+    height:30px;
+    text-align: right; float: right; margin-left: 0.5em;
+}
+#register_requisition{
+    padding: 10px;
+    text-align:right;
+}
+#box_profile{
+    height: 339px;
+    padding-top:30px
+}
+#user-profile{
+    margin-left: 10px;
+}
+.hr_modal{
+    border-top: 1px solid #c4c4c4;
+}
+.table-veiculos td{
+    border:1px solid #d2d6de !important;
+}
+.table-veiculos th{
+    border:1px solid #d2d6de !important;
+}
+.table-veiculos tr{
+    border:1px solid #d2d6de !important;
+}
+.table-veiculos tbody{
+    border:1px solid #d2d6de !important;
+}
+.table-veiculos thead{
+    border:1px solid #d2d6de !important;
+}
+.btn-cinza {
+    color: rgb(0, 0, 0);
+    background-color: #c4c4c4;
+    border-color: #b8b7b7
+}
+
+.btn-cinza.focus,
+.btn-cinza:focus {
+    color: #fff;
+    background-color: #c4c4c4;
+    border-color: #d6d6d6
+}
+
+.btn-cinza:hover {
+    color: #fff;
+    background-color: #c4c4c4;
+    border-color: #d6d6d6
+}
+
+.btn-cinza.active,
+.btn-cinza:active,
+.open>.dropdown-toggle.btn-cinza {
+    color: #fff;
+    background-color: #c4c4c4;
+    background-image: none;
+    border-color: #d6d6d6
+}
+
+.btn-cinza.active.focus,
+.btn-cinza.active:focus,
+.btn-cinza.active:hover,
+.btn-cinza:active.focus,
+.btn-cinza:active:focus,
+.btn-cinza:active:hover,
+.open>.dropdown-toggle.btn-cinza.focus,
+.open>.dropdown-toggle.btn-cinza:focus,
+.open>.dropdown-toggle.btn-cinza:hover {
+    color: #fff;
+    background-color: #c4c4c4;
+    border-color: #d6d6d6
+}
+
+.btn-cinza.disabled.focus,
+.btn-cinza.disabled:focus,
+.btn-cinza.disabled:hover,
+.btn-cinza[disabled].focus,
+.btn-cinza[disabled]:focus,
+.btn-cinza[disabled]:hover,
+fieldset[disabled] .btn-cinza.focus,
+fieldset[disabled] .btn-cinza:focus,
+fieldset[disabled] .btn-cinza:hover {
+    background-color: #c4c4c4;
+    border-color: #d6d6d6
+}
+
+.btn-cinza .badge {
+    color: #c4c4c4;
+    background-color: #fff
+}
+
+
+.imagemUser{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}

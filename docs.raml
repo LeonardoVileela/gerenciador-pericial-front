@@ -1,0 +1,1482 @@
+#%RAML 1.0  
+title: Gerenciador Pericial
+baseUri: https://191.252.202.56/fabrica/p05-ger-pericial/
+version: v1.6
+
+/account:
+  /verifyToken.json:
+    post:
+      description: Esse endpoint é responsável por realizar uma autenticação do token do usuário para liberar as permissões de acesso e modificação deste usuário. Atua diversas vezes no sistema, verificando se o token existe, não existe, é inválido, ou está expirado.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: O identificador do usuário a ter seu token verificado.
+          example: 21
+          required: true
+        tokenCode:
+          displayName: tokenCode
+          type: string
+          description: Código do token autenticador do usuário.
+          example: "0x e3b0cf991b7852b855342b516234fca213457"
+          required: true
+      responses:
+        200:
+          description: Token válido.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 12,
+                    "tokenCode": "0x e3b0cf991b7852b855342b516234fca213457"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Token expirado, inválido ou inexistente.
+          body:
+            application/json:
+              example: |
+                  {
+                    "data": {
+                      "id": 12,
+                      "tokenCode": "0x e3b0cf991b7852b855342b516234fca213457"
+                    },
+                  "success": false,
+                  "status": 400
+                  }
+  /changePass.json:
+    post:
+      description: Esse endpoint é responsável por trocar a senha do usuário.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: O identificador do usuário que vai mudar sua senha.
+          example: 25
+          required: true
+        password:
+          displayName: password
+          type: string
+          description: A nova senha do usuário será utilizada para realização do login no sistema.
+          example: "12345678"
+          required: true
+      responses:
+        200:
+          description: Senha alterada com sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 25,
+                    "password": "12345678"
+                  },
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: A senha não foi alterada. Por favor, tente novamente. 
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 25,
+                    "password": "12345678"
+                  },
+                  "success": false,
+                  "status": 400
+                }     
+  /lostAccount.json:
+    post:
+      description: Esse endpoint é responsável por recuperar a conta de um usuário que esqueceu sua senha.
+      queryParameters:
+        email:
+          displayName: email
+          type: string
+          description: O email do usuário será utilizado para realização da recuperação de conta.
+          example: "joao.sousa@email.com.br"
+          required: true
+      responses:
+        200:
+          description: Email de recuperação de senha enviado com sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "email": "joao.sousa@email.com.br"
+                  },
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Erro. Email de recuperação de senha não enviado.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "email": "joao.sousa@email.com.br"
+                  },
+                  "success": false,
+                  "status": 400
+                }
+ 
+  
+  /confirmAccount.json:
+    post:
+      description: Esse endpoint é responsável por confirmar a conta de um novo usuário.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: O identificador do usuário que vai ter sua conta confirmada.
+          example: 15
+          required: true
+      responses:
+        200:
+          description: A conta foi confirmada com sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 22
+                  },
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Conta não confirmada. Por Favor, tente novamente.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 22
+                  },
+                  "success": false,
+                  "status": 400
+                }
+ 
+  
+  /resendEmail.json:
+    post:
+      description: Esse endpoint é responsável por reenviar o email de confirmação da conta de um novo usuário.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: O identificador do usuário que irá receber outro email de confirmação de conta.
+          example: 57
+          required: true
+      responses:
+        200:
+          description: O email foi enviado com sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 57
+                  },
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Erro ao enviar email.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 57
+                  },
+                  "success": false,
+                  "status": 400
+                }
+ 
+  
+  
+
+/login.json:
+  post:
+    description: Esse endpoint é responsável por realizar a autenticação (log in) do usuário no sistema, permitindo sua utilização.
+    queryParameters:
+        email:
+          displayName: email
+          type: string
+          description: O email do usuário que quer entrar no sistema.
+          example: "maria.da.silva@email.com"
+          required: true
+        password:
+          displayName: password
+          type: string
+          description: A senha referente a esse usuário.
+          example: "12345678"
+          required: true
+    responses:
+        200:
+          description: Token válido.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "email": "maria.da.silva@email.com",
+                    "password": "123456789"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Usuário ou senha inválidos.
+          body:
+            application/json:
+              example: |
+                  {
+                    "data": {
+                      "email": "maria.da.silva@email.com",
+                      "password": "123467892"
+                    },
+                  "success": false,
+                  "status": 400
+                  }
+  
+  
+/reports:
+   /view.json:
+    get:
+      description: Esse endpoint retorna todos os laudos registrados no sistema.
+      responses:
+        200:
+          description: Sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Você precisa de autorização para realizar essa requisição. 
+          body:
+            application/json:
+              example: |
+                {
+                  "success": false,
+                  "status": 400
+                }     
+  
+   /add.json:
+      post:
+        description: Esse endpoint é responsável por adicionar um novo laudo ao sistema.
+        queryParameters:
+          report_id:
+            displayName: report_id
+            type: number
+            description: Número de ordem do novo laudo.
+            example: 132
+            required: true
+          user_id:
+            displayName: user_id
+            type: number
+            description: O perito responsável pela confecção do laudo.
+            example: 9
+            required: true
+          request_id:
+            displayName: request_id
+            type: number
+            description: O perito responsável pela confecção do laudo.
+            example: 92
+            required: true
+          deliver_date:
+            displayName: deliver_date
+            type: date-only
+            description: Data da entrega do laudo.
+            example: "2020-05-15"
+            required: false
+          receiver:
+            displayName: receiver
+            type: string
+            description: Servidor que recebeu o laudo pronto.
+            example: "Antônio Sousa"
+            required: false
+          status:
+            displayName: status
+            type: string
+            description: Situação atual do laudo.
+            example: "Entregue"
+            required: false
+        responses:
+          200:
+            description: O laudo foi adicionado com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 433,
+                      "user_id": 123,
+                      "request_id": 55,
+                      "deliver_date": "2020/05/15",
+                      "receiver": "Antonio Silva",
+                      "status": "Entregue"
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao adicionar laudo.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 433,
+                      "user_id": 123,
+                      "request_id": 55,
+                      "deliver_date": "2020/05/15",
+                      "receiver": "Antonio Silva",
+                      "status": "Entregue"
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+                        
+    
+   /edit.json:
+    put:
+      description: Esse endpoint é responsável modificar um atributo dentro de um laudo já existente.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação do laudo que será editado.
+          example: 68
+          required: true
+        data:
+          displayName: data
+          type: any
+          description: Dado(s) a ser(em) adicionado(s) ou modificado(s) no laudo.
+          example: "Marcos Mercadante"
+          required: true
+      responses:
+        200:
+          description: O laudo foi modificado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 65,
+                    "receiver": "Marcos de Souza",
+                    "status": "Aguardando laboratório"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao modificar o laudo.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": 65,
+                    "receiver": "Marcos de Souza"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+  
+    post:
+      description: Esse endpoint é responsável adicionar um atributo dentro de um laudo já existente.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação do laudo que será editado.
+          example: 32
+          required: true
+        data:
+          displayName: data
+          type: any
+          description: Dado(s) a ser(em) adicionado(s) ou modificado(s) no laudo.
+          example: "Marcos Mercadante"
+          required: true
+      responses:
+        200:
+          description: O laudo foi modificado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 32,
+                    "receiver": "Marcos de Souza"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao modificar o laudo.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": 32,
+                    "receiver": "Marcos de Souza"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+
+   /delete.json:
+      delete:
+        description: Esse endpoint é responsável por excluir do banco de dados um laudo previamente adicionado.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação do laudo que será excluído.
+            example: 51
+            required: true
+        responses:
+          200:
+            description: O laudo foi excluído com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 51
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir laudo. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 41
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+      post:
+        description: Esse endpoint é responsável por excluir do banco de dados um laudo previamente adicionado.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação do laudo que será excluído.
+            example: 43
+            required: true
+        responses:
+          200:
+            description: O laudo foi excluído com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 43
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir laudo. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 41
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+                                        
+    
+    
+/requesitions:
+  /view.json:
+    get:
+      description: Esse endpoint retorna todas as requisições registradas no sistema.
+      responses:
+        200:
+          description: Sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Você precisa de autorização para realizar essa requisição. 
+          body:
+            application/json:
+              example: |
+                {
+                  "success": false,
+                  "status": 400
+                }     
+  
+  /viewOne/{id}.json:
+      get:
+        description: Esse endpoint é responsável por exibir uma requisição específica do sistema.
+        queryParameters:
+            id:
+              displayName: id
+              type: number
+              description: Identificação da requisição que será exibida.
+              example: 62
+              required: true
+        responses:
+          200:
+            description: Sucesso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                    "id": 53
+                    },
+                    "success": true,
+                    "status": 200
+                  }
+          400:
+            description: Requisição não encontrada. 
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                    "id": 46
+                    },
+                    "success": false,
+                    "status": 400
+                  }     
+  /select.json:
+    get:
+      description: Seleciona o perito que tiver cumprido a menor parcela de laudos. Em outras palavras, aquele que menos tiver feito laudo é escolhido. Em caso de empate, a escolha é feita de forma aleatória.
+      responses:
+        200:
+          description: Sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Você precisa de autorização para realizar essa requisição. 
+          body:
+            application/json:
+              example: |
+                {
+                  "success": false,
+                  "status": 400
+                }     
+  
+  /add.json:
+      post:
+        description: Esse endpoint é responsável por adicionar uma nova requisição no sistema.
+        queryParameters:
+          descricao:
+            displayName: descricao
+            type: string
+            description: Descrição escrita da requisição e demais informações pertinentes.
+            example: "Requisição de perícia de veículos"
+            required: false
+          data_documento:
+            displayName: data_documento
+            type: date-only
+            description: Data do documento que criou a nova requisição.
+            example: "2020-02-16"
+            required: false
+          n_documento:
+            displayName: n_documento
+            type: string
+            description: Número do documento que foi recebido e deu origem a uma nova requisição.
+            example: "578/2012"
+            required: false
+          data_realizacao_pericia:
+            displayName: data_realizacao_pericia
+            type: date-only
+            description: Data em que foi realizada a perícia.
+            example: "2019-09-30"
+            required: false
+          data_recebimento:
+            displayName: data_recebimento
+            type: date-only
+            description: Data de recebimento da requisição.
+            example: "2013-01-31"
+            required: false
+          escrivao:
+            displayName: escrivao
+            type: string
+            description: Escrivão responsável pelo recebimento da requisição.
+            example: "Carla Marques"
+            required: false
+          delegacia:
+            displayName: delegacia
+            type: string
+            description: Delegacia de onde se originou a requisição.
+            example: "15ª DP Paranaíba"
+            required: false
+          autoridade_requisitante:
+            displayName: autoridade_requisitante
+            type: string
+            description: Nome da autoridade que fez a requisição de perícia.
+            example: "João Paraná"
+            required: false
+          logradouro:
+            displayName: logradouro
+            type: string
+            description: Nome do logradouro onde ocorreu o crime.
+            example: "Mato Grosso"
+            required: false
+          tipo_logradouro:
+            displayName: tipo_logradouro
+            type: string
+            description: Tipo do logradouro onde ocorreu o crime.
+            example: "Avenida"
+            required: false
+          nmr_logradouro:
+            displayName: nmr_logradouro
+            type: string
+            description: Número do logradouro onde ocorreu o crime.
+            example: "3332"
+            required: false
+          bairro:
+            displayName: bairro
+            type: string
+            description: Nome do bairro onde ocorreu o crime.
+            example: "Centro"
+            required: false
+          cidade:
+            displayName: cidade
+            type: string
+            description: Nome da cidade onde ocorreu o crime.
+            example: "Paranaíba"
+            required: false
+          n_laudos_expedidos:
+            displayName: n_laudos_expedidos
+            type: string
+            description: Número de laudos que foram originados da requisição.
+            example: "3"
+            required: false
+          cargo:
+            displayName: cargo
+            type: string
+            description: Cargo do remetente da requisição.
+            example: "Delegado"
+            required: false
+          observacoes:
+            displayName: observacoes
+            type: string
+            description: Demais informações sobre a requisição.
+            example: "Perícia urgente"
+            required: false
+          n_oficio:
+            displayName: n_oficio
+            type: string
+            description: Número do ofício que originou a requisição.
+            example: "22/2019"
+            required: false
+          tipo_pericia:
+            displayName: tipo_pericia
+            type: string
+            description: O tipo de perícia a ser realizada pelo perito responsável.
+            example: "Balística"
+            required: false
+          exame_pericia:
+            displayName: exame_pericia
+            type: string
+            description: O exame relacionado ao objetivo da perícia.
+            example: "Exame in loco"
+            required: false
+          n_bo:
+            displayName: n_bo
+            type: string
+            description: Número do boletim de ocorrência relacionado com a requisição.
+            example: "123/2016"
+            required: false
+          n_ip:
+            displayName: n_ip
+            type: string
+            description: Número do Inquérito Policial relacionado com a requisição.
+            example: "23/2016"
+            required: false
+          outros_proc:
+            displayName: outros_proc
+            type: string
+            description: Outros processos relacionados com a requisição.
+            example: "Ofício n° 215 do 11º DP de Cassilândia"
+            required: false
+          nome_vitima:
+            displayName: nome_vitima
+            type: string
+            description: Nome da vítima relacionada com a requisição.
+            example: "Claudio Castro"
+            required: false
+        responses:
+          200:
+            description: O laudo foi adicionado com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 59,
+                      "user_id": 7,
+                      "deliver_date": "2020/05/15",
+                      "receiver": "Antonio Silva",
+                      "status": "Entregue"
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao adicionar laudo.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 66,
+                      "user_id": 8,
+                      "deliver_date": "2020/05/15",
+                      "receiver": "Antonio Silva",
+                      "status": "Entregue"
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+                        
+    
+  /edit.json:
+    put:
+      description: Esse endpoint é responsável por modificar dentro de uma requisição já existente.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação da requisição que será editada.
+          example: 11
+          required: true
+        data:
+          displayName: data
+          type: any
+          description: Dado(s) a ser(em) adicionado(s) ou modificado(s) na requisição.
+          example: "5ª Delegacia de Polícia"
+          required: true
+      responses:
+        200:
+          description: A requisição foi modificada com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 65,
+                    "data_realizacao_pericia": "15/07/2014",
+                    "tipo_pericia": "Balística"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao modificar a requisição.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": 22,
+                    "tipo_pericia": "Balística"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+  
+    post:
+      description: Esse endpoint é responsável por adicionar um atributo dentro de uma requisição já existente.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação da requisição que será editada.
+          example: 32
+          required: true
+        data:
+          displayName: data
+          type: any
+          description: Dado(s) a ser(em) adicionado(s) ou modificado(s) na requisição.
+          example: "Marcos"
+          required: true
+      responses:
+        200:
+          description: A requisição foi modificada com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 77,
+                    "escrivao": "Fabio Pereira"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao modificar a requisição.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": 32,
+                    "escrivao": "Marcos de Souza",
+                    "cargo": "Escrivão de Polícia"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+
+  /delete.json:
+      delete:
+        description: Esse endpoint é responsável por excluir do banco de dados uma requisição previamente adicionada.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação da requisição que será excluída.
+            example: 6543
+            required: true
+        responses:
+          200:
+            description: A requisição foi excluída com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 553
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir a requisição. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 235
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+      post:
+        description: Esse endpoint é responsável por excluir do banco de dados uma requisição previamente adicionada.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação da requisição que será excluída.
+            example: 6543
+            required: true
+        responses:
+          200:
+            description: A requisição foi excluída com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 553
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir a requisição. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 235
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+/roles:
+  /add.json:
+    post:
+      description: Esse endpoint permite ao administrador cadastrar um novo cargo.
+      queryParameters:
+        name:
+          displayName: name
+          type: string
+          description: O nome do cargo que será adicionado no sistema.
+          example: "Inspetor de Cybercrimes"
+          required: true
+      responses:
+        200:
+          description: Cargo registrado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "name":"Inspetor"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao tentar resgistrar cargo.
+          body:
+            application/json:
+              example: |
+                 {
+                    "data": {
+                      "name":"Inspetor"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+  /edit.json:
+    post:
+      description: Esse endpoint permite ao administrador editar um novo cargo existente.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação do cargo que será editado.
+          example: "3"
+          required: true
+        data:
+          displayName: data
+          type: string
+          description: Dado(s) a ser(em) adicionado(s) ou modificado(s) no cargo.
+          example: "Inspetor de Armas"
+          required: true
+      responses:
+        200:
+          description: Cargo modificado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id":"4",
+                    "data":"Inspetor Sênior"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao tentar modificar cargo.
+          body:
+            application/json:
+              example: |
+                 {
+                    "data": {
+                      "id":"4",
+                      "data":"Inspetor Sênior"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+  /delete.json:
+    delete:
+        description: Esse endpoint é responsável por excluir do banco de dados um cargo previamente registrado.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação do cargo que será excluído.
+            example: 3
+            required: true
+        responses:
+          200:
+            description: O cargo foi excluído com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 4
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir cargo. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 4
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+      post:
+        description: Esse endpoint é responsável por excluir do banco de dados um cargo previamente registrado.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação do cargo que será excluído.
+            example: 3
+            required: true
+        responses:
+          200:
+            description: O cargo foi excluído com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 4
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir cargo. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 4
+                    },
+                    "success": false,
+                    "status": 400
+                    }                              
+    
+/users:
+  /verifyUser.json:
+    post:
+      description: Esse endpoint permite ao usuário realizar uma confirmação de seu email.
+      responses:
+        200:
+          description: Usuário verificado com sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Usuário não pode ser verificado. Por favor, tente novamente.
+          body:
+            application/json:
+              example: |
+                  {
+                  "success": false,
+                  "status": 400
+                  }
+  /uploadFile.json:
+    post:
+      description: Esse endpoint permite que um usuário carregue no sistema uma foto de perfil.
+      queryParameters:
+        photo:
+          displayName: photo
+          type: file
+          description: Arquivo de imagem a ser carregado.
+          example: foto.jpg
+          required: true
+      responses:
+        200:
+          description: Imagem alterada com sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "photo": "foto.jpg"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Ocorreu um erro ao tentar salvar a imagem. Por favor, tente novamente.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "photo": "foto.jpg"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+
+  /viewUnUsers.json:
+    get:
+      description: Esse endpoint retorna todos os usuários do sistema que ainda não foram autorizados por um administrador.
+      responses:
+        200:
+          description: Sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Você precisa de autorização para realizar essa requisição. 
+          body:
+            application/json:
+              example: |
+                {
+                  "success": false,
+                  "status": 400
+                }     
+  
+  /viewUsers.json:
+    get:
+      description: Esse endpoint retorna todos os usuários do sistema já autorizados por um administrador.
+      responses:
+        200:
+          description: Sucesso.
+          body:
+            application/json:
+              example: |
+                {
+                  "success": true,
+                  "status": 200
+                }
+        400:
+          description: Você precisa de autorização para realizar essa requisição. 
+          body:
+            application/json:
+              example: |
+                {
+                  "success": false,
+                  "status": 400
+                }     
+  
+  /authorizeUser.json:
+    post:
+      description: Esse endpoint permite que um administrador autorize um novo usuário a utilizar o sistema.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação do usuário que será autorizado.
+          example: 68
+          required: true
+        role_id:
+          displayName: role_id
+          type: number
+          description: Atributo a ser associado ao usuário, ocasionando sua autorização.
+          example: 1
+          required: true
+      responses:
+        200:
+          description: Usuário foi autorizado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": "102"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao tentar autorizar usuário.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": "102"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+  /unauthorizeUser.json:
+    post:
+      description: Esse endpoint permite que um administrador desautorize um usuário a utilizar o sistema.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação do usuário que será desautorizado.
+          example: 68
+          required: true
+      responses:
+        200:
+          description: Usuário foi desautorizado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": "102"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao tentar desautorizar usuário.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": "102"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+
+  /promoteUser.json:
+    post:
+      description: Esse endpoint permite que um administrador promova um usuário normal do sistema para um usuário administrador.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação do usuário que será desautorizado.
+          example: 68
+          required: true
+        role_id:
+          displayName: role_id
+          type: number
+          description: Atributo a ser modificado dentro de um usuário, o transformando em usuário administrador.
+          example: 2
+          required: true
+      responses:
+        200:
+          description: Usuário foi desautorizado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 102,
+                    "role_id": 2
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao tentar desautorizar usuário.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": 23,
+                    "role_id": 2
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+          
+  /add.json:
+    post:
+      description: Esse endpoint é responsável por adicionar um novo usuário ao sistema, enviando a ele um email de confirmação após a adição.
+      queryParameters:
+        email:
+          displayName: email
+          type: string
+          description: O email do usuário será utilizado para realização do login no sistema.
+          example: "joao.silva@email.com"
+          required: true
+        password:
+          displayName: password
+          type: string
+          description: A senha do usuário será utilizada para realização do login no sistema.
+          example: "12345678"
+          required: true
+        name:
+          displayName: name
+          type: string
+          description: O nome completo do usuário.
+          example: "João Silva"
+          required: true
+        phone:
+          displayName: phone
+          type: string
+          description: O telefone do usuário.
+          example: "55 66666 9999"
+          required: true
+        position:
+          displayName: position
+          type: string
+          description: O cargo do usuário dentro da Polícia Civil.
+          example: "Agente de Polícia Científica"
+          required: true
+      responses:
+        200:
+          description: Usuário registrado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "email":"joao.silva@email.com",
+                    "password": "12345678",
+                    “name”: “João Silva”,
+                    “phone”: “55 66666 9999”,
+                    “position”: “Agente de Polícia Científica”
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao tentar resgistrar usuário.
+          body:
+            application/json:
+              example: |
+                 {
+                  "data": {
+                    "email":"joao.silva@email.com",
+                    "password": "12345678",
+                    “name”: “João Silva”,
+                    “phone”: “55 66666 9999”,
+                    “position”: “Agente de Polícia Científica”
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+  /edit.json:
+    post:
+      description: Esse endpoint é responsável por modificar um atributo de algum usuário já cadastrado no sistema.
+      queryParameters:
+        id:
+          displayName: id
+          type: number
+          description: Identificação do usuário que será editado.
+          example: 32
+          required: true
+        data:
+          displayName: data
+          type: any
+          description: Dado(s) a ser(em) adicionado(s) ou modificado(s) no usuário.
+          example: "email@email.com"
+          required: true
+      responses:
+        200:
+          description: O usuário foi editado com sucessso.
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "id": 32,
+                    "email": "maria.silva@email.com.br"
+                  },
+                  "success": true,
+                  "status": 200
+                  }
+        400:
+          description: Erro ao editar o usário.
+          body:
+            application/json:
+              example: |
+                  {
+                  "data": {
+                    "id": 32,
+                    "email": "maria.silva@email.com.br"
+                  },
+                  "success": false,
+                  "status": 400
+                  }
+  /delete.json:
+    delete:
+        description: Esse endpoint é responsável por excluir do banco de dados um usuário previamente registrado.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação do usuário que será excluído.
+            example: 51
+            required: true
+        responses:
+          200:
+            description: O usuário foi excluído com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 51
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir usuário. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 41
+                    },
+                    "success": false,
+                    "status": 400
+                    }
+      post:
+        description: Esse endpoint é responsável por excluir do banco de dados um laudo previamente adicionado.
+        queryParameters:
+          id:
+            displayName: id
+            type: number
+            description: Identificação do laudo que será excluído.
+            example: 43
+            required: true
+        responses:
+          200:
+            description: O laudo foi excluído com sucessso.
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": {
+                      "id": 43
+                    },
+                    "success": true,
+                    "status": 200
+                    }
+          400:
+            description: Erro ao tentar excluir laudo. Por favor, tente novamente.
+            body:
+              application/json:
+                example: |
+                    {
+                    "data": {
+                      "id": 41
+                    },
+                    "success": false,
+                    "status": 400
+                    }
